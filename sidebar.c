@@ -39,12 +39,11 @@ static BUFFY *TopBuffy = 0;
 static BUFFY *BottomBuffy = 0;
 static int known_lines = 0;
 
-enum {
-	SB_SRC_NONE = 0,
-	SB_SRC_VIRT,
-	SB_SRC_INCOMING
-};
 static int sidebar_source = SB_SRC_NONE;
+int sidebar_get_source()
+{
+    return sidebar_source;
+}
 
 static BUFFY *get_incoming()
 {

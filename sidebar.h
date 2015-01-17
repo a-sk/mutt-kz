@@ -25,6 +25,11 @@ struct MBOX_LIST {
 	int msgcount;
 	int new;
 } MBLIST;
+enum {
+	SB_SRC_NONE = 0,
+	SB_SRC_VIRT,
+	SB_SRC_INCOMING
+};
 
 /* parameter is whether or not to go to the status line */
 /* used for omitting the last | that covers up the status bar in the index */
@@ -35,5 +40,6 @@ void set_buffystats(CONTEXT*);
 void toggle_sidebar(int menu);
 int sidebar_should_refresh();
 void sidebar_updated();
+int sidebar_get_source();
 
 #endif /* SIDEBAR_H */
