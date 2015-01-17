@@ -30,7 +30,7 @@ int nm_get_all_tags(CONTEXT *ctx, char **tag_list, int *tag_count);
 /*
  * functions usable outside notmuch CONTEXT
  */
-int nm_nonctx_get_count(char *path, int *all, int *new);
+int nm_nonctx_get_count(char *path, int *all, int *new, int *flagged);
 
 char *nm_header_get_tag_transformed(char *tag, HEADER *h);
 char *nm_header_get_tags_transformed(HEADER *h);

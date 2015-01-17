@@ -1611,7 +1611,7 @@ static unsigned count_query(notmuch_database_t *db, const char *qstr)
 	return res;
 }
 
-int nm_nonctx_get_count(char *path, int *all, int *new)
+int nm_nonctx_get_count(char *path, int *all, int *new, int *flagged)
 {
 	struct uri_tag *query_items = NULL, *item;
 	char *db_filename = NULL, *db_query = NULL;
@@ -1665,6 +1665,14 @@ int nm_nonctx_get_count(char *path, int *all, int *new)
 		safe_asprintf(&qstr, "( %s ) tag:%s",
 				db_query, NotmuchUnreadTag);
 		*new = count_query(db, qstr);
+		FREE(&qstr);
+	}
+	if (flagged) {
+		char *qstr;
+
+		safe_asprintf(&qstr, "( %s ) tag:flagged",
+				db_query);
+		*flagged = count_query(db, qstr);
 		FREE(&qstr);
 	}
 
