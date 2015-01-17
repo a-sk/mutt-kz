@@ -575,7 +575,7 @@ static void buffy_check(BUFFY *tmp, struct stat *contex_sb)
 	tmp->msgcount = 0;
 	tmp->msg_unread = 0;
 	tmp->msg_flagged = 0;
-	nm_nonctx_get_count(tmp->path, &tmp->msgcount, &tmp->msg_unread);
+	nm_nonctx_get_count(tmp->path, &tmp->msgcount, &tmp->msg_unread, &tmp->msg_flagged);
 	if (tmp->msg_unread > 0) {
 	  BuffyCount++;
 	  tmp->new = 1;
