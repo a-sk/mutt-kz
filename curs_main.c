@@ -1428,9 +1428,21 @@ int mutt_index_menu (void)
 	buf[0] = '\0';
 	if ((op == OP_MAIN_NEXT_UNREAD_MAILBOX) && Context && Context->path)
 	{
-	  strfcpy (buf, Context->path, sizeof (buf));
-	  mutt_pretty_mailbox (buf, sizeof (buf));
-	  mutt_buffy (buf, sizeof (buf));
+		strfcpy(buf, Context->path, sizeof (buf));
+#ifdef USE_NOTMUCH
+		if (sidebar_get_source() == SB_SRC_VIRT)
+		{
+			mutt_buffy_vfolder (buf, sizeof (buf));
+			nm_description_to_path(buf, buf, sizeof (buf));
+		}
+		else if (sidebar_get_source() == SB_SRC_INCOMING)
+		{
+#endif
+			mutt_pretty_mailbox (buf, sizeof (buf));
+			mutt_buffy (buf, sizeof (buf));
+#ifdef USE_NOTMUCH
+		}
+#endif
 	  if (!buf[0])
 	  {
 	    mutt_error _("No mailboxes have new mail");
