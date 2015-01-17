@@ -2524,8 +2524,10 @@ int mutt_index_menu (void)
         scroll_sidebar(op, menu->menu);
         break;
 
-      case OP_SIDEBAR_TOGGLE:
-	toggle_sidebar(menu->menu);
+    case OP_SIDEBAR_TOGGLE:
+        toggle_sidebar(menu->menu);
+        strncpy( buf, CurBuffy->path, sizeof(buf) );
+        main_change_folder(menu, op, buf, sizeof (buf), &oldcount, &index_hint);
 	break;
 
       default:
