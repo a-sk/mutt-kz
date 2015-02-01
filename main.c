@@ -1048,7 +1048,11 @@ int main (int argc, char **argv)
       }
     }
 
-    mutt_folder_hook (folder);
+#ifdef USE_NOTMUCH
+      mutt_folder_hook (VirtIncoming->desc);
+#else
+      mutt_folder_hook (folder);
+#endif
 
     if((Context = mx_open_mailbox (folder, ((flags & M_RO) || option (OPTREADONLY)) ? M_READONLY : 0, NULL))
        || !explicit_folder)
