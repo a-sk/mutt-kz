@@ -564,14 +564,9 @@ static int main_change_folder(MUTTMENU *menu, int op, char *buf, size_t bufsz,
   CurrentMenu = MENU_MAIN;
 
 #ifdef USE_NOTMUCH
-  if (sidebar_get_source() == SB_SRC_VIRT) {
-      mutt_folder_hook (VirtIncoming->desc);
-  }
-  else if (sidebar_get_source() == SB_SRC_INCOMING) {
-#endif
-      mutt_folder_hook (buf);
-#ifdef USE_NOTMUCH
-  }
+  mutt_folder_hook (VirtIncoming->desc);
+#else
+  mutt_folder_hook (buf);
 #endif
 
   if ((Context = mx_open_mailbox (buf,
