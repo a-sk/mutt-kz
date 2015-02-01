@@ -1705,6 +1705,18 @@ char *nm_get_description(CONTEXT *ctx)
 	return NULL;
 }
 
+char *nm_path_to_description(char *path)
+{
+
+    BUFFY *p;
+
+    for (p = VirtIncoming; p; p = p->next)
+        if (p->path && p->desc && strcmp(p->path, path) == 0)
+            return p->desc;
+
+    return NULL;
+}
+
 int nm_description_to_path(const char *desc, char *buf, size_t bufsz)
 {
 	BUFFY *p;
