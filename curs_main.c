@@ -564,9 +564,12 @@ static int main_change_folder(MUTTMENU *menu, int op, char *buf, size_t bufsz,
   CurrentMenu = MENU_MAIN;
 
 #ifdef USE_NOTMUCH
-  mutt_folder_hook (VirtIncoming->desc);
+    char *virt_folder_name;
+    virt_folder_name = nm_path_to_description(buf);
+    mutt_folder_hook (virt_folder_name);
+    free(&virt_folder_name);
 #else
-  mutt_folder_hook (buf);
+    mutt_folder_hook (buf);
 #endif
 
   if ((Context = mx_open_mailbox (buf,
