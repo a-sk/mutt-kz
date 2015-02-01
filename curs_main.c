@@ -564,10 +564,15 @@ static int main_change_folder(MUTTMENU *menu, int op, char *buf, size_t bufsz,
   CurrentMenu = MENU_MAIN;
 
 #ifdef USE_NOTMUCH
+ if (sidebar_get_source() == SB_SRC_VIRT) {
     char *virt_folder_name;
     virt_folder_name = nm_path_to_description(buf);
     mutt_folder_hook (virt_folder_name);
     free(&virt_folder_name);
+  }
+  else if (sidebar_get_source() == SB_SRC_INCOMING) {
+    mutt_folder_hook (buf);
+  }
 #else
     mutt_folder_hook (buf);
 #endif
