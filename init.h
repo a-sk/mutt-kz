@@ -492,6 +492,23 @@ struct option_t MuttVars[] = {
   ** $$crypt_replyencrypt,
   ** $$crypt_autosign, $$crypt_replysign and $$smime_is_default.
   */
+  { "crypt_opportunistic_encrypt", DT_BOOL, R_NONE, OPTCRYPTOPPORTUNISTICENCRYPT, 0 },
+  /*
+  ** .pp
+  ** Setting this variable will cause Mutt to automatically enable and
+  ** disable encryption, based on whether all message recipient keys
+  ** can be located by mutt.
+  ** .pp
+  ** When this option is enabled, mutt will determine the encryption
+  ** setting each time the TO, CC, and BCC lists are edited.  If
+  ** $$edit_headers is set, mutt will also do so each time the message
+  ** is edited.  If you wish to manually enable/disable encryption with
+  ** this option set, you should do so after editing the message and
+  ** recipients, to avoid mutt changing your setting.
+  ** .pp
+  ** \fBNote:\fP this option has no effect when $$crypt_autoencrypt is enabled.
+  ** (Crypto only)
+   */
   { "pgp_replyencrypt",		DT_SYN,  R_NONE, UL "crypt_replyencrypt", 1  },
   { "crypt_replyencrypt",	DT_BOOL, R_NONE, OPTCRYPTREPLYENCRYPT, 1 },
   /*
@@ -2065,18 +2082,18 @@ struct option_t MuttVars[] = {
   { "sidebar_width", DT_NUM, R_BOTH, UL &SidebarWidth, 0 },
   /*
   ** .pp
-  ** Do not refresh sidebar in less than $sidebar_refresh seconds,
-  ** (0 disables refreshing).
+  ** The width of the sidebar.
   */
   { "sidebar_refresh", DT_NUM, R_BOTH, UL &SidebarRefresh, 60 },
   /*
   ** .pp
-  ** The width of the sidebar.
+  ** Do not refresh sidebar in less than $sidebar_refresh seconds,
+  ** (0 disables refreshing).
   */
   {"sidebar_newmail_only", DT_BOOL, R_BOTH, OPTSIDEBARNEWMAILONLY, 0 },
   /*
   ** .pp
-  ** Show only new mail in the sidebar.
+  ** Show only new and flagged mail in the sidebar.
   */
   { "pgp_use_gpg_agent", DT_BOOL, R_NONE, OPTUSEGPGAGENT, 0},
   /*
@@ -3741,6 +3758,7 @@ const struct command_t Commands[] = {
   { "send-hook",	mutt_parse_hook,	M_SENDHOOK },
   { "send2-hook",	mutt_parse_hook,	M_SEND2HOOK },
   { "set",		parse_set,		0 },
+  { "sidebar_whitelist",parse_list,		UL &SidebarWhitelist },
   { "source",		parse_source,		0 },
   { "spam",		parse_spam_list,	M_SPAM },
   { "nospam",		parse_spam_list,	M_NOSPAM },
